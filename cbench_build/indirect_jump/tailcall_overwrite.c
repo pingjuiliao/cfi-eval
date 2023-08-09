@@ -32,15 +32,15 @@ int VoidArgFunc(void) {
 
 int VulEntryFunc(int a, int b) {
   __asm__ volatile("nop\n"
-                   "nop\n"
-                   "nop\n"
-                   "nop\n"
-                   "nop\n"
-                   "nop\n"
-                   "nop\n"
-                   "nop\n"
-                   "nop\n"
-                   "nop\n");
+      "nop\n"
+      "nop\n"
+      "nop\n"
+      "nop\n"
+      "nop\n"
+      "nop\n"
+      "nop\n"
+      "nop\n"
+      "nop\n");
   printf("In %s\n", __FUNCTION__);
   exit(0);
 }
@@ -71,15 +71,13 @@ int excute(void) {
 }
 
 int main(int argc, const char *argv[]) {
-  if (argc != 1) {
-    printf("\tSameTypeFunc: %p\n", (void *)SameTypeFunc);
-    printf("\tDiffRetFunc: %p\n", (void *)DiffRetFunc);
-    printf("\tDiffArgFunc: %p\n", (void *)DiffArgFunc);
-    printf("\tMoreArgFunc: %p\n", (void *)MoreArgFunc);
-    printf("\tLessArgFunc: %p\n", (void *)LessArgFunc);
-    printf("\tVoidArgFunc: %p\n", (void *)VoidArgFunc);
-    printf("\tnot_entry: %p\n", (void *)(VulEntryFunc + 0x10));
-  }
+  printf("\tSameTypeFunc: %p\n", (void *)SameTypeFunc);
+  printf("\tDiffRetFunc: %p\n", (void *)DiffRetFunc);
+  printf("\tDiffArgFunc: %p\n", (void *)DiffArgFunc);
+  printf("\tMoreArgFunc: %p\n", (void *)MoreArgFunc);
+  printf("\tLessArgFunc: %p\n", (void *)LessArgFunc);
+  printf("\tVoidArgFunc: %p\n", (void *)VoidArgFunc);
+  printf("\tnot_entry: %p\n", (void *)(VulEntryFunc + 0x10));
 
   printf("In %s\n", __FUNCTION__);
   excute();

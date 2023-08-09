@@ -77,9 +77,15 @@ struct FuncPtr {
   VoidArgFunc_ void_arg_func[1];
 };
 
+struct TwoFuncPtr {
+  struct FuncPtr fptr1;
+  struct FuncPtr fptr2; 
+};
+struct TwoFuncPtr two_func_ptr;
 // the struct aligns the function pointer arrays
 // so indexing past the end will reliably call working function pointers
-static struct FuncPtr fptr1 = {
+struct TwoFuncPtr two_func_ptr = { 
+  .fptr1 = {
     .correct_func = {Foo},
     .same_type_func = {SameTypeFunc1},
     .diff_arg_func = {DiffArgFunc1},
@@ -87,22 +93,22 @@ static struct FuncPtr fptr1 = {
     .more_arg_func = {MoreArgFunc1},
     .less_arg_func = {LessArgFunc1},
     .void_arg_func = {VoidArgFunc1},
-};
-
-static struct FuncPtr fptr2 = {
+  },
+  .fptr2 = {
     .correct_func = {Bar},
     .same_type_func = {SameTypeFunc2},
     .diff_arg_func = {DiffArgFunc2},
     .diff_ret_func = {DiffRetFunc2},
     .more_arg_func = {MoreArgFunc2},
     .less_arg_func = {LessArgFunc2},
-    .void_arg_func = {VoidArgFunc2},
+    .void_arg_func = {VoidArgFunc2},  
+  }
 };
 
 int Excute(const char *argv[]) {
   printf("Calling a function:\n");
   int idx = argv[1][0] - '0';
-  return fptr1.correct_func[idx](idx, idx);
+  return two_func_ptr.fptr1.correct_func[idx](idx, idx);
 }
 
 int main(int argc, const char *argv[]) {
@@ -111,10 +117,10 @@ int main(int argc, const char *argv[]) {
     printf("Option values:\n");
     printf("0: the correct function");
     printf("1-6: out of bound access inside the same object");
-    printf("\tthe correct function: %p\n", (void *)fptr1.correct_func);
+    printf("\tthe correct function: %p\n", (void *)two_func_ptr.fptr1.correct_func);
     printf("let test the out of bound access inside the other object");
     printf("\tthe same-type function infptr2: %p\n",
-           (void *)fptr2.correct_func);
+           (void *)two_func_ptr.fptr2.correct_func);
     printf("The bar-based offset is sequentially increased by 1-6\n");
 		return 1;
   }
