@@ -85,8 +85,8 @@ static struct FuncPtr fptr1 = {
     .diff_arg_func = {DiffArgFunc1},
     .diff_ret_func = {DiffRetFunc1},
     .more_arg_func = {MoreArgFunc1},
-    .less_arg_func = {LessArgFunc1},
-    .void_arg_func = {VoidArgFunc1},
+    .less_arg_func = {(LessArgFunc_)LessArgFunc1},
+    .void_arg_func = {(VoidArgFunc_)VoidArgFunc1},
 };
 
 static struct FuncPtr fptr2 = {
@@ -95,8 +95,8 @@ static struct FuncPtr fptr2 = {
     .diff_arg_func = {DiffArgFunc2},
     .diff_ret_func = {DiffRetFunc2},
     .more_arg_func = {MoreArgFunc2},
-    .less_arg_func = {LessArgFunc2},
-    .void_arg_func = {VoidArgFunc2},
+    .less_arg_func = {(LessArgFunc_)LessArgFunc2},
+    .void_arg_func = {(VoidArgFunc_)VoidArgFunc2},
 };
 
 int main(int argc, const char *argv[]) {

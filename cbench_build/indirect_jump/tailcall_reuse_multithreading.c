@@ -1,6 +1,8 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+
 typedef int (*SameTypeFunc_)(int, int);
 typedef void (*DiffRetFunc_)(int, int);
 typedef int (*DiffArgFunc_)(int, float);
@@ -77,54 +79,63 @@ struct FuncPtr {
   VoidArgFunc_ void_arg_func[1];
 };
 
+struct TwoFuncPtr {
+  struct FuncPtr fptr1;
+  struct FuncPtr fptr2; 
+};
+struct TwoFuncPtr two_func_ptr;
 // the struct aligns the function pointer arrays
 // so indexing past the end will reliably call working function pointers
-static struct FuncPtr fptr1 = {
+struct TwoFuncPtr two_func_ptr = { 
+  .fptr1 = {
     .correct_func = {Foo},
     .same_type_func = {SameTypeFunc1},
     .diff_arg_func = {DiffArgFunc1},
     .diff_ret_func = {DiffRetFunc1},
     .more_arg_func = {MoreArgFunc1},
-    .less_arg_func = {LessArgFunc1},
-    .void_arg_func = {VoidArgFunc1},
-};
-
-static struct FuncPtr fptr2 = {
+    .less_arg_func = {(LessArgFunc_)LessArgFunc1},
+    .void_arg_func = {(VoidArgFunc_)VoidArgFunc1},
+  },
+  .fptr2 = {
     .correct_func = {Bar},
     .same_type_func = {SameTypeFunc2},
     .diff_arg_func = {DiffArgFunc2},
     .diff_ret_func = {DiffRetFunc2},
     .more_arg_func = {MoreArgFunc2},
-    .less_arg_func = {LessArgFunc2},
-    .void_arg_func = {VoidArgFunc2},
+    .less_arg_func = {(LessArgFunc_)LessArgFunc2},
+    .void_arg_func = {(VoidArgFunc_)VoidArgFunc2},  
+  }
 };
+
 int idx;
 
 int Excute(void) {
   printf("Calling a function:\n");
   scanf("%d", &idx);
   sleep(3);
-  return fptr1.correct_func[idx](idx, idx);
+  return two_func_ptr.fptr1.correct_func[idx](idx, idx);
 }
 
 void *UseIdx(void *args) {
   if (Excute())
     printf("success exit\n");
+  return NULL;
 }
 
 void *IncreaseIdx(void *args) {
 	sleep(1);
   printf("plz input index:\n");
   scanf("%d", &idx);
+  return NULL;
 }
 
 int main(int argc, const char *argv[]) {
 
   printf("0: the correct function\n");
   printf("1-6: out of bound access inside the same object\n");
-  printf("\tthe correct function: %p\n", (void *)fptr1.correct_func);
+  printf("\tthe correct function: %p\n", (void *)two_func_ptr.fptr1.correct_func);
   printf("let test the out of bound access inside the other object\n");
-  printf("\tthe same-type function infptr2: %p\n", (void *)fptr2.correct_func);
+  printf("\tthe same-type function infptr2: %p\n", (void *)two_func_ptr.fptr2.correct_func);
   printf("The bar-based offset is sequentially increased by 1-6\n");
 
   pthread_t a, b;

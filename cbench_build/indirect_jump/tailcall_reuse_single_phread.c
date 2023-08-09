@@ -91,8 +91,8 @@ struct TwoFuncPtr two_func_ptr = {
     .diff_arg_func = {DiffArgFunc1},
     .diff_ret_func = {DiffRetFunc1},
     .more_arg_func = {MoreArgFunc1},
-    .less_arg_func = {LessArgFunc1},
-    .void_arg_func = {VoidArgFunc1},
+    .less_arg_func = {(LessArgFunc_)LessArgFunc1},
+    .void_arg_func = {(VoidArgFunc_)VoidArgFunc1},
   },
   .fptr2 = {
     .correct_func = {Bar},
@@ -100,14 +100,14 @@ struct TwoFuncPtr two_func_ptr = {
     .diff_arg_func = {DiffArgFunc2},
     .diff_ret_func = {DiffRetFunc2},
     .more_arg_func = {MoreArgFunc2},
-    .less_arg_func = {LessArgFunc2},
-    .void_arg_func = {VoidArgFunc2},  
+    .less_arg_func = {(LessArgFunc_)LessArgFunc2},
+    .void_arg_func = {(VoidArgFunc_)VoidArgFunc2},  
   }
 };
 
 int Excute(const char *argv[]) {
   printf("Calling a function:\n");
-  int idx = argv[1][0] - '0';
+  int idx = atoi(argv[1]);
   return two_func_ptr.fptr1.correct_func[idx](idx, idx);
 }
 
