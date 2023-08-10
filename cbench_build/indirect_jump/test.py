@@ -15,17 +15,16 @@ arg_test_overwrite = [
 bin_test_overwrite = os.path.dirname(__file__) + "/tailcall_overwrite"
 
 def test_overwrite(hijack_func_name):
-    r = process(bin_test_overwrite)
+    p = process(bin_test_overwrite)
 
-    r.recvuntil(hijack_func_name + b": ")
-    leak = r.recvline()
+    p.recvuntil(hijack_func_name + b": ")
+    leak = p.recvline()
     hijack_address = int(leak.decode().strip(), 16)
-    payload = b"a" * 0x28 + p64(hijack_address)
+    payload = b"a" * 0x10 + p64(hijack_address)
 
-    r.sendlineafter(b"plz input your name length:", b"-1")
-    r.sendafter(b"plz input your name:", payload)
-    response = r.recvrepeat(5)
-    r.close()
+    p.sendafter(b"plz input your name:", payload)
+    response = p.recvrepeat(1)
+    p.close()
 
     res_msg = f"Testing hijack to {hijack_func_name.decode():14s}...: "
     if hijack_func_name in response:
@@ -56,9 +55,9 @@ bin_test_reuse_single_phread = os.path.dirname(__file__) + "/tailcall_reuse_sing
 
 def test_reuse_single_phread(func_tuple):
     func_index, hijack_func_name = func_tuple
-    r = process([bin_test_reuse_single_phread, str(func_index)])
-    response = r.recvrepeat(.5)
-    r.close()
+    p = process([bin_test_reuse_single_phread, str(func_index)])
+    response = p.recvrepeat(.5)
+    p.close()
 
     res_msg = f"Testing hijack to {hijack_func_name.decode():14s}...: "
     if hijack_func_name in response:
@@ -88,11 +87,11 @@ bin_test_reuse_multithreading = os.path.dirname(__file__) + "/tailcall_reuse_mul
 def test_reuse_multithreading(func_tuple):
     func_index, hijack_func_name = func_tuple
 
-    r = process(bin_test_reuse_multithreading)
-    r.sendlineafter(b"plz input index:",
+    p = process(bin_test_reuse_multithreading)
+    p.sendlineafter(b"plz input index:",
                     str(func_index).encode())
-    response = r.recvrepeat(5)
-    r.close()
+    response = p.recvrepeat(5)
+    p.close()
 
     res_msg = f"Testing hijack to {hijack_func_name.decode():14s}...: "
     if b"Foo" in response:

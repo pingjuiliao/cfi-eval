@@ -112,6 +112,9 @@ int Excute(const char *argv[]) {
 }
 
 int main(int argc, const char *argv[]) {
+
+  setbuf(stdin, NULL);
+  setbuf(stdout, NULL);
   if (argc != 2) {
     printf("Usage: %s <option>\n", argv[0]);
     printf("Option values:\n");

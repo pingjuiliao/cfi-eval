@@ -51,27 +51,27 @@ int Foo(int a, int b) {
   return 0;
 }
 
+struct ExcuteStackFrame {
+  char name[0x10];
+  Fptr ptr;
+};
+
 int excute(void) {
   printf("In %s\n", __FUNCTION__);
-  int len;
-  int data_len;
-  printf("plz input your name length:\n");
-  // integer overflow
-  scanf("%uld", &data_len);
-  len = data_len + 0x10;
-  Fptr ptr = Foo;
-  char name[len];
-  // If the compiler version is too low, use the following line instead
-  // char name[0x10];
-  printf("name is : %p \n", name);
-  printf("ptr is : %p \n", &ptr);
+
+  struct ExcuteStackFrame stack_frame;
+  printf("name is : %p \n", stack_frame.name);
+  printf("ptr is : %p \n", &stack_frame.ptr);
   // buffer overflow
   printf("plz input your name:\n");
-  read(0, name, data_len);
-  return ptr(0, 0);
+  read(0, stack_frame.name, 0x30);
+  return stack_frame.ptr(0, 0);
 }
 
 int main(int argc, const char *argv[]) {
+
+  setbuf(stdin, NULL);
+  setbuf(stdout, NULL);
   printf("\tSameTypeFunc: %p\n", (void *)SameTypeFunc);
   printf("\tDiffRetFunc: %p\n", (void *)DiffRetFunc);
   printf("\tDiffArgFunc: %p\n", (void *)DiffArgFunc);

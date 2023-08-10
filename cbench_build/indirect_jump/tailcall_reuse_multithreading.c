@@ -131,6 +131,9 @@ void *IncreaseIdx(void *args) {
 
 int main(int argc, const char *argv[]) {
 
+  setbuf(stdin, NULL);
+  setbuf(stdout, NULL);
+
   printf("0: the correct function\n");
   printf("1-6: out of bound access inside the same object\n");
   printf("\tthe correct function: %p\n", (void *)two_func_ptr.fptr1.correct_func);
