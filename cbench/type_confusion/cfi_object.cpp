@@ -38,7 +38,7 @@ void Admin::admin(void) {
   std::cout << "My admin ID is " << id_ << std::endl;
   std::cout << "I used the admin function" << std::endl;
   std::cout << "I will execute the \"/bin/sh\" command" << std::endl;
-  system("/bin/sh");
+  // system("/bin/sh");
 }
 
 int main(int argc, const char *argv[]) {
