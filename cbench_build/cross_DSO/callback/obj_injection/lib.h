@@ -23,6 +23,7 @@ class Admin : public Member {
 	public:
 		Admin(void);
 		virtual void AdminStuff(void);
+    virtual void SetName(void);
 };
 
 void Execute(Admin *admin, User *user_a, User *user_b);

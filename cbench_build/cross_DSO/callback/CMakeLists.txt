@@ -1,1 +1,3 @@
 add_subdirectory(cptr_overwrite)
+add_subdirectory(cptr_reuse)
+add_subdirectory(obj_injection)
