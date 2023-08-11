@@ -1,5 +1,5 @@
 # Cptr Overwrite
-add_library(CptrOverwrite
+add_library(CptrOverwrite SHARED
   lib.c
   lib.h
 )

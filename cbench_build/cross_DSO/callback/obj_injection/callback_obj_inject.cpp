@@ -17,7 +17,7 @@ void getshell(void) {
                    "nop\n"
                    "nop\n");
   std::cout << "you get shell!!" << std::endl;
-  system("/bin/sh");
+  // system("/bin/sh");
 }
 
 void *vul_fun = (void *)getshell;
