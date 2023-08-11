@@ -6,7 +6,7 @@ class Member {
 	protected:
 		int id;
 		std::string permissions;
-		char name[4];
+		char name[0x10];
 
 	public:
 		virtual void AdminStuff(void);

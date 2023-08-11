@@ -17,6 +17,7 @@ class User : public Member {
 	public:
 		User(void);
 		virtual void AdminStuff(void);
+    virtual void SetName(void);
 };
 
 class Admin : public Member {

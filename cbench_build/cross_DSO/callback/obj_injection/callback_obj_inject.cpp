@@ -37,7 +37,7 @@ void Member::AdminStuff(void) { std::cout << "Not implemented" << std::endl; }
 
 void Member::SetName(void) {
   std::cout << "plz input your name" << std::endl;
-	read(0,name,0x20);
+	read(0,name,0x4);
 }
 
 User::User(void) { permissions = "user"; }
@@ -55,14 +55,14 @@ void Admin::AdminStuff(void) {
   std::cout << "Account  is: " << permissions << std::endl;
   std::cout << "Notice: Admin Work only permitted for a admin account! "
             << std::endl;
-  std::cout << name << " would do  the Admin work " << std::endl;
+  std::cout << name << " would do the Admin work " << std::endl;
 }
 const char* admin_name = "Bob";
 void Admin::SetName(void) {
   uint64_t addr;
   uint64_t value;
-  memset(name, '\0', 4);
-  read(0, name, 0x10);
+  memset(name, '\0', sizeof(name));
+  read(0, name, 8);
   name[3] = '\0';
   if (strcmp(admin_name, name) != 0) {
     return;
