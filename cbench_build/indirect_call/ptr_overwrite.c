@@ -4,6 +4,15 @@
 
 typedef int (*Fptr)(int, int);
 
+int my_read(void *buf, size_t size) {
+  int r = read(0, buf, size);
+  if (r == 0) {
+    printf("error on read");
+    exit(-1);
+  }
+  return r;
+}
+
 int SameTypeFunc(int a, int b) {
   printf("In %s \n", __FUNCTION__);
   return 0;
@@ -78,7 +87,7 @@ int main(int argc, const char *argv[]) {
   printf("name is %p\n",main_stack.name);
   // buffer overflow
   printf("plz input your name:\n");
-  read(0, (void *)&main_stack.name, 0x20);
+  my_read((void *)&main_stack.name, 0x20);
   main_stack.ptr(0, 0);
 
   return 0;

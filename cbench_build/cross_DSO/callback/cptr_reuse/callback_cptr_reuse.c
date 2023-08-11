@@ -44,8 +44,8 @@ static struct FuncPtr fptr1 = {
     .diff_arg_func = {DiffArgFunc},
     .diff_ret_func = {DiffRetFunc},
     .more_arg_func = {MoreArgFunc},
-    .less_arg_func = {LessArgFunc},
-    .void_arg_func = {VoidArgFunc},
+    .less_arg_func = {(LessArgFunc_)LessArgFunc},
+    .void_arg_func = {(VoidArgFunc_)VoidArgFunc},
 };
 
 int main(int argc, const char *argv[]) {

@@ -4,14 +4,9 @@
 typedef int (*Fptr)(int, int);
 
 __attribute__((visibility("default"))) void Callback(Fptr ptr) {
-  int k = rand() % 100;
-  Fptr fptr;
-  char name[4];
 
-  fptr = ptr;
-
-  printf("ptr is: %p\n", fptr);
-  printf("ptr address is: %p\n", &fptr);
+  printf("ptr is: %p\n", ptr);
+  printf("ptr address is: %p\n", &ptr);
   // Assuming that the attacker has the ability to write to any address
   void **anyptr;
   printf("plz input the value of anyptr: \n");
@@ -19,5 +14,5 @@ __attribute__((visibility("default"))) void Callback(Fptr ptr) {
   printf("plz change the value of *anyptr: \n");
   scanf("%p", anyptr);
 
-  fptr(0, 0);
+  ptr(0, 0);
 }

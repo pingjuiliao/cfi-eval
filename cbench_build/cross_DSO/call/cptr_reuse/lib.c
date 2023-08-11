@@ -77,10 +77,10 @@ void LeakPtr(void) {
 	long int vul_entry_offset_idx=((void *)vul_entry_array - (void *)ptr_array)/8;
 
   printf("\tSameTypeFunc offset idx: %ld\n", same_type_offset_idx);
-  printf("\tDiffRetFunc offset idx: %lld\n", diff_ret_offset_idx);
-  printf("\tDiffArgFunc offset idx: %lld\n", diff_arg_offset_idx);
-  printf("\tMoreArgFunc offset idx: %lld\n", more_arg_offset_idx);
-  printf("\tLessArgFunc offset idx: %lld\n", less_arg_offset_idx);
-  printf("\tVoidArgFunc offset idx: %lld\n", void_arg_offset_idx);
-  printf("\tNot Entry offset idx: %lld\n", vul_entry_offset_idx);
+  printf("\tDiffRetFunc offset idx: %ld\n", diff_ret_offset_idx);
+  printf("\tDiffArgFunc offset idx: %ld\n", diff_arg_offset_idx);
+  printf("\tMoreArgFunc offset idx: %ld\n", more_arg_offset_idx);
+  printf("\tLessArgFunc offset idx: %ld\n", less_arg_offset_idx);
+  printf("\tVoidArgFunc offset idx: %ld\n", void_arg_offset_idx);
+  printf("\tNot Entry offset idx: %ld\n", vul_entry_offset_idx);
 }

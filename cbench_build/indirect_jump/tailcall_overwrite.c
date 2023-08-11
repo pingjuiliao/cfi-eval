@@ -4,6 +4,16 @@
 
 typedef int (*Fptr)(int, int);
 
+int my_read(void* buf, size_t size) {
+  int r = read(0, buf, size);
+  if (r == 0) {
+    printf("error on read\n");
+    exit(-1);
+  }
+  return r;
+}
+
+
 int SameTypeFunc(int a, int b) {
   printf("In %s \n", __FUNCTION__);
   return 0;
@@ -64,7 +74,7 @@ int excute(void) {
   printf("ptr is : %p \n", &stack_frame.ptr);
   // buffer overflow
   printf("plz input your name:\n");
-  read(0, stack_frame.name, 0x30);
+  my_read((void *)stack_frame.name, 0x30);
   return stack_frame.ptr(0, 0);
 }
 
